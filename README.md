@@ -2,8 +2,7 @@
 
 The Recommender System is a piece of software - entirely based on JAVA - that computes meaningful combinations 
 between the some datasets federated by [SemaGrow](http://www.semagrow.eu/), and generates a new triplestore: the “Recommender Database”. 
-The Recommender System was developed by FAO of the UN, with the support of the University of Alcalà. It was funded
-by [SemaGrow](http://www.semagrow.eu/) FP7 EU Project.
+The Recommender System was funded by [SemaGrow](http://www.semagrow.eu/) FP7 EU Project.
 
 It computes meaningful combinations between two or more datasets federated by SemaGrow: 
 the computation of combinations is based on the matching of AGROVOC URIs between datasets.
