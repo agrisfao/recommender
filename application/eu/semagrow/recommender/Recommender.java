@@ -74,14 +74,14 @@ public class Recommender {
 				//write a file and log
 				current++;
 				log.info("...Remaining: "+ (total-current));
-				if(recoms.size()%1000==0) {
+				if(recoms.size()%1000==0 && recoms.size()>0) {
 					this.writeFile(recoms, current);
 					recoms.clear();
 				}
 				
 			} catch (Exception e){
 				log.warning("Problems with the triplestore! URI: "+ uri+" will be discarded.");
-				return;
+				log.warning(e.getStackTrace().toString());
 			}
 		}
 		
