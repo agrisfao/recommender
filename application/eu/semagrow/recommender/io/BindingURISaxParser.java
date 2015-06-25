@@ -1,40 +1,44 @@
 package eu.semagrow.recommender.io;
 
-import java.util.List;
 import java.util.Set;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class URISaxParser extends DefaultHandler {
+public class BindingURISaxParser extends DefaultHandler {
 	
 	//outputs
 	private Set<String> uris;
-	private List<String> listUris;
-
+	
 	//data
 	private boolean isURI;
+	
+	//flag to identify the binging
+	private boolean isBinding;
+	private String binding;
 
 	//to read the entire content
-	private StringBuffer buffer; 
+	private StringBuffer buffer;
 	
-	public URISaxParser(Set<String> uris) {
+	public BindingURISaxParser(Set<String> uris, String binding) {
+		this.binding = binding;
 		this.uris = uris;
+		this.isURI = false;
+		this.isBinding = false;
 	}
 	
-	public URISaxParser(List<String> uris) {
-		this.listUris = uris;
-		this.isURI = false;
-	}
-
 	/**
 	 * Recognize an element
 	 */
 	public void startElement (String namespaceURI, String localName, String rawName, Attributes atts) {	
-		if(rawName.equalsIgnoreCase("uri")){
+		if(rawName.equalsIgnoreCase("uri") && this.isBinding){
 			this.buffer = new StringBuffer();
 			this.isURI = true;
+		} else if(rawName.equalsIgnoreCase("binding")){
+			String name = atts.getValue("name");
+			if(name.equalsIgnoreCase(this.binding))
+				this.isBinding = true;
 		}
 	}
 
@@ -55,23 +59,14 @@ public class URISaxParser extends DefaultHandler {
 	 */
 	public void endElement(String namespaceUri, String localName, String rawName)
 	throws SAXException {
-		if(rawName.equalsIgnoreCase("uri")){
+		if(rawName.equalsIgnoreCase("uri") && this.isBinding){
 			this.isURI = false;
+			this.isBinding = false;
 			String term = new String(this.buffer);
 			if(term!=null && !term.trim().equals("")  && !term.contains("??") && !term.contains("\n")){
-				this.addToNotNullCollection(term);
+				this.uris.add(term);
 			}
 		}
-	}
-	
-	/*
-	 * Add to the Set or to the List
-	 */
-	private void addToNotNullCollection(String term){
-		if(this.uris!=null)
-			this.uris.add(term);
-		else if(this.listUris!=null)
-			this.listUris.add(term);
 	}
 
 }

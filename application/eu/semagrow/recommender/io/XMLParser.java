@@ -46,6 +46,29 @@ public class XMLParser {
 			log.warning("Set of terms URIs was not initialized");
 		}
 	}
+	
+	/**
+	 * Parse an XML with <uri> elements nested into a <binding> element with bindingName "name" attribute, and stores the content in a Set
+	 * @param xmlStr the input XML
+	 * @param bindingName the name of the binding element whose content is the desired uri
+	 * @param termsURIs the output Set
+	 * @throws XPathExpressionException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
+	public void parseURI(String xmlStr, String bindingName, Set<String> termsURIs) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
+		if(termsURIs!=null && xmlStr!=null && bindingName!=null){
+			SAXParserFactory  spf = SAXParserFactory.newInstance();
+			spf.setValidating(false);
+			spf.setNamespaceAware(false);
+			SAXParser saxParser = spf.newSAXParser();
+			saxParser.parse(new InputSource(new StringReader(xmlStr)), new BindingURISaxParser(termsURIs, bindingName));
+		}
+		else {
+			log.warning("Set of terms URIs was not initialized");
+		}
+	}
 
 	/**
 	 * Parse an XML with <uri> elements and stores the content in a Map, counting the occurrences
