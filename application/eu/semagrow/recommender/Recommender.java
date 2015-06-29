@@ -34,7 +34,8 @@ public class Recommender {
 		String startDate = DateTime.getDateTime();	
 		Recommender rec = new Recommender();
 		rec.startProcess();
-		log.info(startDate + " -------- " + DateTime.getDateTime());
+		String endDate = DateTime.getDateTime();
+		log.info(startDate + " -- " + endDate + " ["+DateTime.dateDiffSeconds(startDate, endDate)+"s]");
 	}
 
 	/*
