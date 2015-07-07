@@ -58,7 +58,7 @@ public class URISaxParser extends DefaultHandler {
 		if(rawName.equalsIgnoreCase("uri")){
 			this.isURI = false;
 			String term = new String(this.buffer);
-			if(term!=null && !term.trim().equals("")  && !term.contains("??") && !term.contains("\n")){
+			if(term!=null && !term.trim().equals("") && !term.contains("??") && !term.contains("\n") && !term.contains("&")){
 				this.addToNotNullCollection(term);
 			}
 		}
