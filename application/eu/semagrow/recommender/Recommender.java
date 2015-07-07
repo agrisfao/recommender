@@ -1,6 +1,7 @@
 package eu.semagrow.recommender;
 
 import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -35,7 +36,7 @@ public class Recommender {
 		Recommender rec = new Recommender();
 		rec.startProcess();
 		String endDate = DateTime.getDateTime();
-		log.info(startDate + " -- " + endDate + " ["+DateTime.dateDiffMinutes(startDate, endDate)+"min]");
+		log.info(startDate + " -- " + endDate + " ["+DateTime.dateDiffSeconds(startDate, endDate)+"s]");
 	}
 
 	/*
@@ -76,7 +77,7 @@ public class Recommender {
 				current++;
 				log.info("...Remaining: "+ (total-current));
 				if(recoms.size()%1000==0 && recoms.size()>0) {
-					this.writeFile(recoms, current);
+					this.writeFile(recoms);
 					recoms.clear();
 				}
 				
@@ -88,18 +89,18 @@ public class Recommender {
 		
 		//write last recommendations
 		if(recoms.size()>0) {
-			this.writeFile(recoms, current);
+			this.writeFile(recoms);
 			recoms.clear();
 		}
 
 		
 	}
 	
-	private void writeFile(List<Recommendation> recoms, int index) {
+	private void writeFile(List<Recommendation> recoms) {
 		//write the file
 		try {
 			RDFWriter writer = new RDFWriter();
-			writer.writeRDFXML(recoms, outputFilePath+"_"+index);
+			writer.writeRDFXML(recoms, outputFilePath+"_"+(new Date()).getTime());
 		} catch (Exception e){
 			log.warning("Problems writing the output! The application will be stopped.");
 			return;
