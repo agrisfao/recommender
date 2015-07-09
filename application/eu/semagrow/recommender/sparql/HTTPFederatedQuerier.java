@@ -17,6 +17,7 @@ import jfcutils.http.GETHttpRequest;
 
 import eu.semagrow.recommender.Defaults;
 import eu.semagrow.recommender.domain.Recommendation;
+import eu.semagrow.recommender.domain.ScoredURI;
 import eu.semagrow.recommender.io.XMLParser;
 
 /**
@@ -73,7 +74,7 @@ public class HTTPFederatedQuerier {
 		if(recoms!=null){
 			XMLParser parser = new XMLParser();
 			//the terms URIs: ORDERED SET
-			Set<String> termsURIs = new TreeSet<String>();
+			Set<ScoredURI> termsURIs = new TreeSet<ScoredURI>();
 
 			//the query
 			String url = this.sparqlEndpoint + "?accept=" + URLEncoder.encode(this.format,"UTF-8");
@@ -82,14 +83,14 @@ public class HTTPFederatedQuerier {
 
 			//HTTP request
 			GETHttpRequest req = new GETHttpRequest();
-			parser.parseURI(req.getUrlContentWithRedirect(url, 15000), termsURIs);
+			parser.parseScoredURI(req.getUrlContentWithRedirect(url, 15000), termsURIs);
 
 			//create recommendations
 			if(termsURIs.size()>0){
 				try {
 					Recommendation r = new Recommendation(this.sourceURI);
 					int i =1;
-					for(String uri: termsURIs){
+					for(ScoredURI uri: termsURIs){
 						r.addRecommendation(uri, i);
 						i++;
 						if(i>Recommendation.max_recommendations)
@@ -111,6 +112,7 @@ public class HTTPFederatedQuerier {
 	 */
 	public static void main(String[] args){
 		try {
+			//TODO: test
 			HTTPFederatedQuerier querier = new HTTPFederatedQuerier("http://agris.fao.org/aos/records/AU7500100");
 			List<Recommendation> recoms = new java.util.LinkedList<Recommendation>();
 			querier.computeRecommendations(recoms);

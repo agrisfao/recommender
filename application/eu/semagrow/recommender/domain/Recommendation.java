@@ -12,7 +12,7 @@ import eu.semagrow.recommender.Defaults;
 public class Recommendation {
 	
 	private String agris_uri;
-	private String[] recommended_uris;
+	private ScoredURI[] recommended_uris;
 	
 	public static final int max_recommendations = Integer.valueOf(Defaults.getString("max_recommendations"));
 	
@@ -21,16 +21,16 @@ public class Recommendation {
 	 */
 	public Recommendation(String agris_uri) {
 		this.agris_uri = agris_uri;
-		this.recommended_uris = new String[Recommendation.max_recommendations];
+		this.recommended_uris = new ScoredURI[Recommendation.max_recommendations];
 	}
 	
 	/**
 	 * Add a recommendation to the Array
-	 * @param uri the recommendation
+	 * @param uri the scored recommendation
 	 * @param position the score of the recommendation, from 1 to Recommendation.max_recommendations
 	 * @throws Exception if the position is not valid, out of the size of the Array
 	 */
-	public void addRecommendation(String uri, int position) throws Exception{
+	public void addRecommendation(ScoredURI uri, int position) throws Exception{
 		if(position>0 && position<=Recommendation.max_recommendations){
 			this.recommended_uris[position-1] = uri;
 		}
@@ -46,11 +46,11 @@ public class Recommendation {
 		agris_uri = agrisUri;
 	}
 
-	public String[] getRecommended_uris() {
+	public ScoredURI[] getRecommended_uris() {
 		return recommended_uris;
 	}
 
-	public void setRecommended_uris(String[] recommendedUris) {
+	public void setRecommended_uris(ScoredURI[] recommendedUris) {
 		recommended_uris = recommendedUris;
 	}
 	

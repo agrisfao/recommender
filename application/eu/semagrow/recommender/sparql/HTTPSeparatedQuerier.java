@@ -19,6 +19,7 @@ import jfcutils.http.GETHttpRequest;
 import jfcutils.util.MapUtil;
 import eu.semagrow.recommender.Defaults;
 import eu.semagrow.recommender.domain.Recommendation;
+import eu.semagrow.recommender.domain.ScoredURI;
 import eu.semagrow.recommender.io.XMLParser;
 
 /**
@@ -86,7 +87,7 @@ public class HTTPSeparatedQuerier {
 			Map<String, Integer> termsURIsOccurr = new HashMap<String, Integer>();
 			for(String uri: termsURIs){
 				//TODO: here we can extract more information (title, subjects...)
-				this.combinationQuery = "SELECT ?url WHERE {" +
+				this.combinationQuery = "SELECT distinct ?url WHERE {" +
 				"?url dct:subject <"+uri+"> . " +
 				"?url rdf:type <"+targetRdfType+"> . " +
 				"}";
@@ -98,13 +99,14 @@ public class HTTPSeparatedQuerier {
 			
 			//sort the map and creare the Recommendation
 			if(termsURIsOccurr.size()>0){
-				Map<String, Integer> sortedMap = MapUtil.sortByValue(termsURIsOccurr);
+				Map<String, Integer> sortedMap = MapUtil.sortByValueDescending(termsURIsOccurr);
 				//create the recommendation 
 				try {
 					Recommendation r = new Recommendation(this.sourceURI);
 					int i =1;
 					for(String s: sortedMap.keySet()){
-						r.addRecommendation(s, i);
+						Double score = (sortedMap.get(s) * 1.0) /termsURIs.size();
+						r.addRecommendation(new ScoredURI(s, score), i);
 						i++;
 						if(i>Recommendation.max_recommendations)
 							break;
@@ -123,7 +125,7 @@ public class HTTPSeparatedQuerier {
 	/*
 	 * Test
 	 */
-	public static void main(String[] args){
+	/*public static void main(String[] args){
 		try {
 			HTTPSeparatedQuerier querier = new HTTPSeparatedQuerier("http://agris.fao.org/aos/records/PH2011000084");
 			List<Recommendation> recoms = new java.util.LinkedList<Recommendation>();
@@ -131,6 +133,6 @@ public class HTTPSeparatedQuerier {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 }

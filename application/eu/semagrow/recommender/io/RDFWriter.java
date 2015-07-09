@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 import eu.semagrow.recommender.domain.Recommendation;
+import eu.semagrow.recommender.domain.ScoredURI;
 
 /**
  * Write the output to an RDF file
@@ -53,13 +54,15 @@ public class RDFWriter {
 		if(recom.getAgris_uri()!=null && recom.getRecommended_uris().length>0){
 			recomBuffer.append("<rdf:Description rdf:about=\""+recom.getAgris_uri()+"\">\n");
 			int i = 1;
-			for(String webURL: recom.getRecommended_uris()){
-				if(webURL!=null){
+			for(ScoredURI recomURL: recom.getRecommended_uris()){
+				if(recomURL!=null){
 					recomBuffer.append("\t<semag:rel><rdf:Description>\n");
 					recomBuffer.append("\t\t<semag:order rdf:datatype=\"http://www.w3.org/2001/XMLSchema#integer\">"+i+"</semag:order>\n");
 					recomBuffer.append("\t\t<semag:recom>\n");
-					recomBuffer.append("\t\t\t<rdf:Description rdf:about=\""+webURL+"\"><rdfs:type rdf:resource=\"http://semagrow.eu/rdf/recom#CrawledDocument\"/></rdf:Description>\n");
+					recomBuffer.append("\t\t\t<rdf:Description rdf:about=\""+recomURL.getUri()+"\"><rdfs:type rdf:resource=\"http://semagrow.eu/rdf/recom#CrawledDocument\"/></rdf:Description>\n");
 					recomBuffer.append("\t\t</semag:recom>\n");
+					if(recomURL.getScore()!=null)
+						recomBuffer.append("\t\t<semag:score rdf:datatype=\"http://www.w3.org/2001/XMLSchema#double\">"+recomURL.getScore()+"</semag:score>\n");
 					recomBuffer.append("\t</rdf:Description></semag:rel>\n");
 					i++;
 				}
@@ -74,12 +77,12 @@ public class RDFWriter {
 	public static void main(String[] args) throws Exception{
 		List<Recommendation> recoms = new java.util.ArrayList<Recommendation>();
 		Recommendation r = new Recommendation("http://agris.fao.org/aos/records/US8051305");
-		r.addRecommendation("http://www.cabi.org/nutrition/general-nutrition-diet/", 2);
-		r.addRecommendation("http://www.nal.usda.gov/awic/pubs/Ferrets06/feed_nutrit_metab.htm", 1);
+		r.addRecommendation(new ScoredURI("http://www.cabi.org/nutrition/general-nutrition-diet/", 0.1), 2);
+		r.addRecommendation(new ScoredURI("http://www.nal.usda.gov/awic/pubs/Ferrets06/feed_nutrit_metab.htm", 0.1), 1);
 		recoms.add(r);
 		r = new Recommendation("http://agris.fao.org/aos/records/US8051306");
-		r.addRecommendation("http://www.nal.usda.gov/awic/pubs/Ferrets06/feed_nutrit_metab.htm", 2);
-		r.addRecommendation("http://jaxmice.jax.org/strain/000648.html", 1);
+		r.addRecommendation(new ScoredURI("http://www.nal.usda.gov/awic/pubs/Ferrets06/feed_nutrit_metab.htm", 0.1), 2);
+		r.addRecommendation(new ScoredURI("http://jaxmice.jax.org/strain/000648.html", 0.1), 1);
 		recoms.add(r);
 		RDFWriter writer = new RDFWriter();
 		writer.writeRDFXML(recoms, "C:/Users/celli/Desktop/test.xml");

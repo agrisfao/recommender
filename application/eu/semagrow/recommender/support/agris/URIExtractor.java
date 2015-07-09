@@ -79,6 +79,9 @@ public class URIExtractor {
 	private Set<String> extractURI(int submissionYear) throws XPathExpressionException, MalformedURLException, ParserConfigurationException, SAXException, IOException{
 		XMLParser parser = new XMLParser();
 		String query = "select distinct ?s {?s <http://purl.org/dc/terms/dateSubmitted> \""+submissionYear+"\"}";
+		//query to exclude AGRICOLA <http://ring.ciard.net/node/10972>
+		//String query = "select distinct ?s {?s <http://purl.org/dc/terms/dateSubmitted> \""+submissionYear+"\" . FILTER (NOT EXISTS { ?s <http://purl.org/dc/terms/source> <http://ring.ciard.net/node/10972> . })}";
+		
 		String url = this.agrisEndpoint + "?accept=" + URLEncoder.encode("application/rdf+xml","UTF-8") + "&query=" + URLEncoder.encode(query,"UTF-8");
 		//the output URIs
 		Set<String> termsURIs = new HashSet<String>();

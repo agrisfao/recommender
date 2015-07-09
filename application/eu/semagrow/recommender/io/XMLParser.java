@@ -16,6 +16,8 @@ import javax.xml.xpath.XPathExpressionException;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import eu.semagrow.recommender.domain.ScoredURI;
+
 /**
  * XML parser
  * @author celli
@@ -41,6 +43,28 @@ public class XMLParser {
 			spf.setNamespaceAware(false);
 			SAXParser saxParser = spf.newSAXParser();
 			saxParser.parse(new InputSource(new StringReader(xmlStr)), new URISaxParser(termsURIs));
+		}
+		else {
+			log.warning("Set of terms URIs was not initialized");
+		}
+	}
+	
+	/**
+	 * Parse an XML with <uri> elements and stores the content in a Set
+	 * @param xmlStr the input XML
+	 * @param termsURIs the output Set
+	 * @throws XPathExpressionException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
+	public void parseScoredURI(String xmlStr, Set<ScoredURI> termsURIs) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
+		if(termsURIs!=null && xmlStr!=null){
+			SAXParserFactory  spf = SAXParserFactory.newInstance();
+			spf.setValidating(false);
+			spf.setNamespaceAware(false);
+			SAXParser saxParser = spf.newSAXParser();
+			saxParser.parse(new InputSource(new StringReader(xmlStr)), new ScoredURISaxParser(termsURIs));
 		}
 		else {
 			log.warning("Set of terms URIs was not initialized");

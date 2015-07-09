@@ -63,7 +63,7 @@ public class BindingURISaxParser extends DefaultHandler {
 			this.isURI = false;
 			this.isBinding = false;
 			String term = new String(this.buffer);
-			if(term!=null && !term.trim().equals("")  && !term.contains("??") && !term.contains("\n")){
+			if(term!=null && !term.trim().equals("")  && !term.contains("??") && !term.contains("\n") && !term.contains("&")){
 				this.uris.add(term);
 			}
 		}
