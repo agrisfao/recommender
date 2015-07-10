@@ -19,6 +19,7 @@ import jfcutils.http.GETHttpRequest;
 import jfcutils.util.MapUtil;
 import eu.semagrow.recommender.Defaults;
 import eu.semagrow.recommender.domain.Recommendation;
+import eu.semagrow.recommender.domain.Score;
 import eu.semagrow.recommender.domain.ScoredURI;
 import eu.semagrow.recommender.io.XMLParser;
 
@@ -105,8 +106,8 @@ public class HTTPSeparatedQuerier {
 					Recommendation r = new Recommendation(this.sourceURI);
 					int i =1;
 					for(String s: sortedMap.keySet()){
-						Double score = (sortedMap.get(s) * 1.0) /termsURIs.size();
-						r.addRecommendation(new ScoredURI(s, score), i);
+						Score score = new Score(sortedMap.get(s), termsURIs.size());
+						r.addRecommendation(new ScoredURI(s, score.gerSimilarityScore()), i);
 						i++;
 						if(i>Recommendation.max_recommendations)
 							break;

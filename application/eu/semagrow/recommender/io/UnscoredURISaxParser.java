@@ -9,7 +9,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import eu.semagrow.recommender.domain.ScoredURI;
 
-public class ScoredURISaxParser extends DefaultHandler {
+public class UnscoredURISaxParser extends DefaultHandler {
 	
 	//outputs
 	private Set<ScoredURI> uris;
@@ -25,12 +25,12 @@ public class ScoredURISaxParser extends DefaultHandler {
 	//tmp
 	private ScoredURI tmpURI;
 	
-	public ScoredURISaxParser(Set<ScoredURI> uris) {
+	public UnscoredURISaxParser(Set<ScoredURI> uris) {
 		this.uris = uris;
 		this.isURI = false;
 	}
 	
-	public ScoredURISaxParser(List<ScoredURI> uris) {
+	public UnscoredURISaxParser(List<ScoredURI> uris) {
 		this.listUris = uris;
 		this.isURI = false;
 	}
@@ -78,7 +78,7 @@ public class ScoredURISaxParser extends DefaultHandler {
 			String term = new String(this.buffer);
 			if(term!=null){
 				//TODO: not a real score
-				tmpURI.setScore(Double.valueOf(term));
+				//tmpURI.setScore(Double.valueOf(term));
 			}
 		} else if(rawName.equalsIgnoreCase("result")){
 			if(tmpURI!=null && tmpURI.getUri()!=null){

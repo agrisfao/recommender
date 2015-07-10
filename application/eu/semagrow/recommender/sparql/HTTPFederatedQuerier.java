@@ -112,7 +112,6 @@ public class HTTPFederatedQuerier {
 	 */
 	public static void main(String[] args){
 		try {
-			//TODO: test
 			HTTPFederatedQuerier querier = new HTTPFederatedQuerier("http://agris.fao.org/aos/records/AU7500100");
 			List<Recommendation> recoms = new java.util.LinkedList<Recommendation>();
 			querier.computeRecommendations(recoms);

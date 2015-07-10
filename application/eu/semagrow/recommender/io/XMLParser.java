@@ -64,7 +64,7 @@ public class XMLParser {
 			spf.setValidating(false);
 			spf.setNamespaceAware(false);
 			SAXParser saxParser = spf.newSAXParser();
-			saxParser.parse(new InputSource(new StringReader(xmlStr)), new ScoredURISaxParser(termsURIs));
+			saxParser.parse(new InputSource(new StringReader(xmlStr)), new UnscoredURISaxParser(termsURIs));
 		}
 		else {
 			log.warning("Set of terms URIs was not initialized");

@@ -30,7 +30,6 @@ public class RDFWriter {
 	 */
 	public void writeRDFXML(List<Recommendation> recoms, String filepath) throws IOException{
 
-		//TODO: for now, all in one
 		BufferedWriter out = new BufferedWriter(new FileWriter(filepath));
 		out.write(RDFWriter.rdfxml_header);
 		out.newLine();
