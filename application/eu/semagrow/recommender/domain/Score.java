@@ -41,7 +41,7 @@ public class Score {
 	/**
 	 * Compute the similarity index
 	 * 1 - (6-min(6,#common)/6)
-	 * @return
+	 * @return the similarity index
 	 */
 	public Double getSimilarityIndex() {
 		Integer rFactor = Math.min(_threshold, this.common);
@@ -50,7 +50,7 @@ public class Score {
 	
 	/**
 	 * Return the similarity score: (common/min(totalTarget,10)) * similarityIndex
-	 * @return
+	 * @return the similarity score
 	 */
 	public Double gerSimilarityScore(){
 		Double firstTerm = (this.common * 1.0)/Math.min(this.totalTarget, _maxThreshold);

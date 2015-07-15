@@ -13,10 +13,12 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
+import jfcutils.http.GETHttpRequest;
+import jfcutils.util.DateTime;
+import jfcutils.util.MapUtil;
+
 import org.xml.sax.SAXException;
 
-import jfcutils.http.GETHttpRequest;
-import jfcutils.util.MapUtil;
 import eu.semagrow.recommender.Defaults;
 import eu.semagrow.recommender.domain.Recommendation;
 import eu.semagrow.recommender.domain.Score;
@@ -24,37 +26,46 @@ import eu.semagrow.recommender.domain.ScoredURI;
 import eu.semagrow.recommender.io.XMLParser;
 
 /**
- * Query the SPARQL endpoint using a REST HTTP request on different SPARQL endpoints
+ * Query the SPARQL endpoint using a REST HTTP request on the federated SPARQL endpoint, running two disting SPARQL queries:
+ * 
+ * PREFIX dct:<http://purl.org/dc/terms/>
+ * SELECT ?term WHERE { 
+ *    <$URI> dct:subject ?term . 
+ * }
+ *  
+ * PREFIX dct:<http://purl.org/dc/terms/>
+ * SELECT ?url WHERE {
+ *    ?url dct:subject <$URI_FROM_PREVIOUS_QUERY>.
+ *    ?url rdf:type <$RDF_TYPE> . 
+ * }
+ * 
  * @author celli
  *
  */
-public class HTTPSeparatedQuerier {
+public class HTTPSingleEndpQuerier {
+	
+	private final static Logger log = Logger.getLogger(HTTPSingleEndpQuerier.class.getName());
 
-	private final static Logger log = Logger.getLogger(HTTPSeparatedQuerier.class.getName());
-
-	//SPARQL ENDPOINT and TYPE
-	private String sparqlEndpoint1 = Defaults.getString("sparqlEndpoint1");
-	private String sparqlEndpoint2 = Defaults.getString("sparqlEndpoint2");
+	//SPARQL ENDPOINT
+	private String sparqlEndpoint = Defaults.getString("sparqlEndpointSG");
 	private String targetRdfType = Defaults.getString("target_rdftype");
-
-	//pre-defined queries
-	private String format1 = "application/rdf+xml";
-	private String format2 = "application/sparql-results+xml";
-
+	
+	//pre-defined format and queries
+	private String format = "application/sparql-results+xml";
+	
 	private String prefixes = "PREFIX dct: <http://purl.org/dc/terms/> " +
 	"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ";
 
 	private String mainQuery;
 	private String combinationQuery;
 	private String sourceURI;
-
+	
 	/**
 	 * Constructor with URI to be recommended
 	 * @param sourceURI the URI to be recommended
 	 */
-	public HTTPSeparatedQuerier(String sourceURI){
+	public HTTPSingleEndpQuerier(String sourceURI){
 		this.sourceURI = sourceURI;
-		//GROUP BY QUERY for the federated endpoint
 		this.mainQuery = "SELECT ?term WHERE { " +
 		"<"+sourceURI + "> dct:subject ?term . " +
 		"}";
@@ -75,10 +86,12 @@ public class HTTPSeparatedQuerier {
 			XMLParser parser = new XMLParser();
 			//*******************************************
 			//QUERY1: get the URIs of terms to be combined
-			String url = this.sparqlEndpoint1 + "?accept=" + URLEncoder.encode(this.format1,"UTF-8");
+			String url = this.sparqlEndpoint + "?accept=" + URLEncoder.encode(this.format,"UTF-8");
 			url += "&query=" + URLEncoder.encode(this.prefixes+" "+this.mainQuery,"UTF-8");
 			//the terms URIs
 			Set<String> termsURIs = new HashSet<String>();
+			
+			//log.info(url);
 			//HTTP request
 			GETHttpRequest req = new GETHttpRequest();
 			parser.parseURI(req.getUrlContentWithRedirect(url, 15000), termsURIs);
@@ -91,9 +104,11 @@ public class HTTPSeparatedQuerier {
 				this.combinationQuery = "SELECT distinct ?url WHERE {" +
 				"?url dct:subject <"+uri+"> . " +
 				"?url rdf:type <"+targetRdfType+"> . " +
-				"}";
-				url = this.sparqlEndpoint2 + "?accept=" + URLEncoder.encode(this.format2,"UTF-8");
+				"} limit 100";
+				url = this.sparqlEndpoint + "?accept=" + URLEncoder.encode(this.format,"UTF-8");
 				url += "&query=" + URLEncoder.encode(this.prefixes+" "+this.combinationQuery,"UTF-8");
+				
+				//log.info(url);
 				//HTTP request
 				parser.parseURI(req.getUrlContentWithRedirect(url, 15000), termsURIsOccurr);
 			}
@@ -126,14 +141,18 @@ public class HTTPSeparatedQuerier {
 	/*
 	 * Test
 	 */
-	/*public static void main(String[] args){
+	public static void main(String[] args){
 		try {
-			HTTPSeparatedQuerier querier = new HTTPSeparatedQuerier("http://agris.fao.org/aos/records/PH2011000084");
+			String startDate = DateTime.getDateTime();
+			HTTPSingleEndpQuerier querier = new HTTPSingleEndpQuerier("http://agris.fao.org/aos/records/PH2011000084");
 			List<Recommendation> recoms = new java.util.LinkedList<Recommendation>();
 			querier.computeRecommendations(recoms);
+			log.info(recoms.toString());
+			String endDate = DateTime.getDateTime();
+			log.info(startDate + " -- " + endDate + " ["+DateTime.dateDiffSeconds(startDate, endDate)+"s]");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 
 }

@@ -21,8 +21,20 @@ import eu.semagrow.recommender.domain.ScoredURI;
 import eu.semagrow.recommender.io.XMLParser;
 
 /**
- * Query the SPARQL endpoint using a REST HTTP request on the federated SPARQL endpoint
- * @author celli
+ * Query the SPARQL endpoint using a REST HTTP request on the federated SPARQL endpoint, running a federated SPARQL query:
+ * 
+ * PREFIX dct: <http://purl.org/dc/terms/>
+ * PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+ * SELECT distinct ?s (COUNT(?o) as ?NELEMENTS) WHERE {
+ * <$URI> dct:subject ?o .
+ * ?s dct:subject ?o .
+ * ?s rdf:type <$RDF_TYPE> .
+ * } 
+ * GROUP BY ?s 
+ * ORDER BY DESC(?NELEMENTS)
+ * LIMIT 20
+ * 
+ * @author fabrizio celli
  *
  */
 public class HTTPFederatedQuerier {
@@ -33,7 +45,7 @@ public class HTTPFederatedQuerier {
 	private String sparqlEndpoint = Defaults.getString("sparqlEndpointSG");
 	private String targetRdfType = Defaults.getString("target_rdftype");
 
-	//pre-defined queries
+	//pre-defined format and queries
 	private String format = "application/sparql-results+xml";
 
 	private String prefixes = "PREFIX dct: <http://purl.org/dc/terms/> " +

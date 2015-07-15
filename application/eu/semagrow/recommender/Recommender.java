@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 
 import eu.semagrow.recommender.domain.Recommendation;
 import eu.semagrow.recommender.io.RDFWriter;
-import eu.semagrow.recommender.sparql.HTTPFederatedQuerier;
-import eu.semagrow.recommender.sparql.HTTPSeparatedQuerier;
+import eu.semagrow.recommender.sparql.HTTPSingleEndpQuerier;
+import eu.semagrow.recommender.sparql.HTTPIndividualQuerier;
 
 import jfcutils.files.read.TXTReader;
 import jfcutils.util.DateTime;
@@ -65,11 +65,11 @@ public class Recommender {
 				//choose the specific recommender
 				String type_recom = Defaults.getString("type_recommendation");
 				if(type_recom.equalsIgnoreCase("federated")){
-					HTTPFederatedQuerier querier = new HTTPFederatedQuerier(uri);
+					HTTPSingleEndpQuerier querier = new HTTPSingleEndpQuerier(uri);
 					querier.computeRecommendations(recoms);
 				}
 				else {
-					HTTPSeparatedQuerier querier = new HTTPSeparatedQuerier(uri);
+					HTTPIndividualQuerier querier = new HTTPIndividualQuerier(uri);
 					querier.computeRecommendations(recoms);
 				}
 				
