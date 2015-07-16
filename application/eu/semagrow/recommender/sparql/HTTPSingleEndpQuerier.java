@@ -144,7 +144,7 @@ public class HTTPSingleEndpQuerier {
 	public static void main(String[] args){
 		try {
 			String startDate = DateTime.getDateTime();
-			HTTPSingleEndpQuerier querier = new HTTPSingleEndpQuerier("http://agris.fao.org/aos/records/PH2011000084");
+			HTTPSingleEndpQuerier querier = new HTTPSingleEndpQuerier("http://agris.fao.org/aos/records/TH2014001739");
 			List<Recommendation> recoms = new java.util.LinkedList<Recommendation>();
 			querier.computeRecommendations(recoms);
 			log.info(recoms.toString());

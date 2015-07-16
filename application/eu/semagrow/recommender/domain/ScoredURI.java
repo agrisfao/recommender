@@ -5,10 +5,11 @@ package eu.semagrow.recommender.domain;
  * @author celli
  *
  */
-public class ScoredURI {
+public class ScoredURI implements Comparable<ScoredURI> {
 	
 	private String uri;
 	private Double score;
+	public Integer commonURIs;
 	
 	public ScoredURI(String uri, Double score){
 		this.uri = uri;
@@ -32,6 +33,21 @@ public class ScoredURI {
 	public void setScore(Double score) {
 		this.score = score;
 	}
+	
+	public Integer getCommonURIs() {
+		return commonURIs;
+	}
+
+	public void setCommonURIs(Integer commonURIs) {
+		this.commonURIs = commonURIs;
+	}
+
+	/**
+	 * Only the URI should be the same
+	 */
+	public int compareTo(ScoredURI o) {
+        return this.uri.compareTo(o.getUri());
+    }
 	
 	public String toString() {
 		return "["+this.getScore()+" - "+this.getUri()+"]";

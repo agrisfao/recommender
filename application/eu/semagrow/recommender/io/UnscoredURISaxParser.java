@@ -70,15 +70,14 @@ public class UnscoredURISaxParser extends DefaultHandler {
 		if(rawName.equalsIgnoreCase("uri") && tmpURI!=null){
 			this.isURI = false;
 			String term = new String(this.buffer);
-			if(term!=null && !term.trim().equals("") && !term.contains("??") && !term.contains("\n") && !term.contains("&")){
+			if(term!=null && !term.trim().equals("") && !term.contains("??") && !term.contains("\n") && !term.contains("&") && !term.contains(" ")){
 				tmpURI.setUri(term);
 			}
 		} else if(rawName.equalsIgnoreCase("literal") && tmpURI!=null){
 			this.isScore = false;
 			String term = new String(this.buffer);
 			if(term!=null){
-				//TODO: not a real score
-				//tmpURI.setScore(Double.valueOf(term));
+				tmpURI.setCommonURIs(Integer.valueOf(term.trim()));
 			}
 		} else if(rawName.equalsIgnoreCase("result")){
 			if(tmpURI!=null && tmpURI.getUri()!=null){

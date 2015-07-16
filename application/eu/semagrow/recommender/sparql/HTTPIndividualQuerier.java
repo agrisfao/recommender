@@ -141,7 +141,7 @@ public class HTTPIndividualQuerier {
 	public static void main(String[] args){
 		try {
 			String startDate = DateTime.getDateTime();
-			HTTPIndividualQuerier querier = new HTTPIndividualQuerier("http://agris.fao.org/aos/records/PH2011000084");
+			HTTPIndividualQuerier querier = new HTTPIndividualQuerier("http://agris.fao.org/aos/records/TH2014001739");
 			List<Recommendation> recoms = new java.util.LinkedList<Recommendation>();
 			querier.computeRecommendations(recoms);
 			System.out.println(recoms);
