@@ -3,9 +3,8 @@ package eu.semagrow.recommender.sparql;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -102,7 +101,7 @@ public class HTTPFederatedQuerier {
 			GETHttpRequest req = new GETHttpRequest();
 			
 			//the terms URIs: ORDERED SET
-			Set<ScoredURI> termsURIs = new TreeSet<ScoredURI>();
+			List<ScoredURI> termsURIs = new LinkedList<ScoredURI>();
 			Integer totalSubjects = null;
 		
 			//the federated query
