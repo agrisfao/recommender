@@ -81,7 +81,7 @@ public class HTTPFederatedQuerier {
 		"<"+sourceURI + "> dct:subject ?o . " +
 		"}";
 
-		log.info(this.groupByQuery);
+		//log.info(this.groupByQuery);
 	}
 
 	/**
@@ -120,7 +120,6 @@ public class HTTPFederatedQuerier {
 				url += "&query=" + URLEncoder.encode(this.countSubjects,"UTF-8");
 				try {
 					totalSubjects = parser.parseLiteral(req.getUrlContentWithRedirect(url, 15000));
-					System.out.println(totalSubjects);
 				}
 				catch (Exception e){}
 				
