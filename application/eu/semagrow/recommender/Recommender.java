@@ -1,5 +1,6 @@
 package eu.semagrow.recommender;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.LinkedList;
@@ -44,6 +45,14 @@ public class Recommender {
 	 */
 	private void startProcess() {
 
+		//check the output file path
+		try {
+			this.checkAndCreateFileParents(outputFilePath);
+		} catch (Exception e){
+			log.warning("Problems with output file path! The application will be stopped.");
+			return;
+		}
+
 		//get URIs to be recommended 
 		Set<String> sourceURIs;
 		try {
@@ -72,7 +81,7 @@ public class Recommender {
 					HTTPIndividualQuerier querier = new HTTPIndividualQuerier(uri);
 					querier.computeRecommendations(recoms);
 				}
-				
+
 				//write a file and log
 				current++;
 				log.info("...Remaining: "+ (total-current));
@@ -80,30 +89,30 @@ public class Recommender {
 					this.writeFile(recoms);
 					recoms.clear();
 				}
-				
+
 			} catch (Exception e){
 				log.warning("Problems with the triplestore! URI: "+ uri+" will be discarded.");
 				log.warning(e.getStackTrace().toString());
 			}
 		}
-		
+
 		//write last recommendations
 		if(recoms.size()>0) {
 			this.writeFile(recoms);
 			recoms.clear();
 		}
-
-		
 	}
-	
+
+	/*
+	 * Write a set of recommendations
+	 */
 	private void writeFile(List<Recommendation> recoms) {
 		//write the file
 		try {
 			RDFWriter writer = new RDFWriter();
 			writer.writeRDFXML(recoms, outputFilePath+"_"+(new Date()).getTime());
 		} catch (Exception e){
-			log.warning("Problems writing the output! The application will be stopped.");
-			return;
+			log.warning("Problems writing the output!");
 		}
 	}
 
@@ -114,6 +123,17 @@ public class Recommender {
 		//parse the list of URIs to be recommended
 		TXTReader reader = new TXTReader();
 		return reader.parseTxt(filepath);
+	}
+
+	/*
+	 * Check the existance of the output file path
+	 */
+	private void checkAndCreateFileParents(String fullpath){
+		File targetFile = new File(fullpath);
+		File parent = targetFile.getParentFile();
+		if(!parent.exists() && !parent.mkdirs() && !parent.canWrite()){
+			throw new IllegalStateException("Couldn't create/write dir: " + parent);
+		}
 	}
 
 }

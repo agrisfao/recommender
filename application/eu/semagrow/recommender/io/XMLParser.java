@@ -66,7 +66,7 @@ public class XMLParser {
 	 * @throws SAXException
 	 * @throws IOException
 	 */
-	public void parseScoredURI(String xmlStr, Set<ScoredURI> termsURIs) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
+	public void parseScoredURI(String xmlStr, List<ScoredURI> termsURIs) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
 		if(termsURIs!=null && xmlStr!=null){
 			SAXParserFactory  spf = SAXParserFactory.newInstance();
 			spf.setValidating(false);
