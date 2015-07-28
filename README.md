@@ -2,10 +2,14 @@
 
 The Recommender System is a piece of software - entirely based on JAVA - that computes meaningful combinations 
 between some datasets federated by [SemaGrow](http://www.semagrow.eu/), and generates a new triplestore: the “Recommender Database”. 
-The Recommender System was funded by [SemaGrow](http://www.semagrow.eu/) FP7 EU Project.
+This work was supported by the European Commission under EU FP7 project [SemaGrow](http://www.semagrow.eu/) (Grant No. 318497).
 
 It computes meaningful combinations between two or more datasets federated by SemaGrow: 
 the computation of combinations is based on the matching of AGROVOC URIs between datasets.
+
+### Execute the command line application
+
+The folder `executable` contains the command line application, including the bash script `start.sh` to run the recommender system. 
 
 The file `application/defaults.properties` contains input parameters for the recommender system:
 * `sourceFilePath` is the path of the input file, containing one URI for each line. The system computes recommendations for each URI available in this file (e.g. /work/recommender/recomm/input.txt)
@@ -19,4 +23,3 @@ The Recommender System can run also by querying two individual SPARQL endpoints 
 * `sparqlEndpoint1` is the SPARQL endpoint of the dataset of URIs defined in `sourceFilePath` 
 * `sparqlEndpoint2` is the SPARQL endpoint of the output datasets (whose entities will be recommended to the client) specified by the `target_rdftype` parameter
 
-The file `application/start.sh` is a bash script to run the recommender system. 
