@@ -1,10 +1,10 @@
 ## Recommender System for the SemaGrow Stack federation
 
 The Recommender System is a piece of software - entirely based on JAVA - that computes meaningful combinations 
-between some datasets federated by [SemaGrow](http://www.semagrow.eu/), and generates a new triplestore: the “Recommender Database”. 
-This work was supported by the European Commission under EU FP7 project [SemaGrow](http://www.semagrow.eu/) (Grant No. 318497).
+between some datasets federated by [SemaGrow](http://www.semagrow.eu/), generating a new triplestore: the “Recommender Database”. 
+This work was funded by the European Commission under EU FP7 project [SemaGrow](http://www.semagrow.eu/) (Grant No. 318497).
 
-It computes meaningful combinations between two or more datasets federated by SemaGrow: 
+The Recommender System computes meaningful combinations between two or more datasets federated by SemaGrow: 
 the computation of combinations is based on the matching of AGROVOC URIs between datasets.
 
 ### Execute the command line application
