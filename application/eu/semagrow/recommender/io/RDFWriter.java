@@ -28,7 +28,7 @@ public class RDFWriter {
 	 * @param filepath the full path of the output file
 	 * @throws IOException
 	 */
-	public void writeRDFXML(List<Recommendation> recoms, String filepath) throws IOException{
+	public void writeRDFXML(List<Recommendation> recoms, String filepath) throws IOException {
 
 		BufferedWriter out = new BufferedWriter(new FileWriter(filepath));
 		out.write(RDFWriter.rdfxml_header);
@@ -43,6 +43,7 @@ public class RDFWriter {
 
 		out.write("</rdf:RDF>");
 		out.flush();
+		out.close();
 
 	}
 

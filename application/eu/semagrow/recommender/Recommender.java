@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.jfcutils.files.read.TXTReader;
+import org.jfcutils.util.DateTime;
+
 import eu.semagrow.recommender.domain.Recommendation;
 import eu.semagrow.recommender.io.RDFWriter;
 import eu.semagrow.recommender.sparql.HTTPFederatedQuerier;
 import eu.semagrow.recommender.sparql.HTTPIndividualQuerier;
-
-import jfcutils.files.read.TXTReader;
-import jfcutils.util.DateTime;
 
 /**
  * SemaGrow Recommender System entry point.

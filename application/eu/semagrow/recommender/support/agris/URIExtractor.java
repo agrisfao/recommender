@@ -14,8 +14,8 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.xml.sax.SAXException;
 
-import jfcutils.files.write.TXTWriter;
-import jfcutils.http.GETHttpRequest;
+import org.jfcutils.files.write.TXTWriter;
+import org.jfcutils.http.GETHttpRequest;
 
 import eu.semagrow.recommender.io.XMLParser;
 

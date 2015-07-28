@@ -13,9 +13,9 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
-import jfcutils.http.GETHttpRequest;
-import jfcutils.util.DateTime;
-import jfcutils.util.MapUtil;
+import org.jfcutils.http.GETHttpRequest;
+import org.jfcutils.util.DateTime;
+import org.jfcutils.util.MapUtil;
 
 import org.xml.sax.SAXException;
 

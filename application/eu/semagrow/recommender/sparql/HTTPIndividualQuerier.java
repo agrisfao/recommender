@@ -15,9 +15,9 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.xml.sax.SAXException;
 
-import jfcutils.http.GETHttpRequest;
-import jfcutils.util.DateTime;
-import jfcutils.util.MapUtil;
+import org.jfcutils.http.GETHttpRequest;
+import org.jfcutils.util.DateTime;
+import org.jfcutils.util.MapUtil;
 import eu.semagrow.recommender.Defaults;
 import eu.semagrow.recommender.domain.Recommendation;
 import eu.semagrow.recommender.domain.Score;
