@@ -7,6 +7,13 @@ This work was funded by the European Commission under EU FP7 project [SemaGrow](
 The Recommender System computes meaningful combinations between two or more datasets federated by SemaGrow: 
 the computation of combinations is based on the matching of AGROVOC URIs between datasets.
 
+### System Requirements
+
+- java >= 1.6 (Mandatory)
+- git >= 1.8.1.4 (to download the project from GitHub: other solutions may be adopted)
+- maven >= 3.0.3 (to edit the code and build a new jar: you can also work with the provided command line application, without using Maven)
+- linux environment (the provided command line application comes with a bash script to execute the code. A developer can replace the bash script with another one, as a bat script for Windows)
+
 ### Execute the command line application
 
 The folder `executable` contains the command line application, including the bash script `start.sh` to run the recommender system. It contains two folders:
