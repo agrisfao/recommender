@@ -32,4 +32,4 @@ The folder `maven-source` contains the Maven source project. You can use it to e
 `cd maven-source/`   
 `mvn clean install`  
 
-You will find the created jar in the directory `target`. In addition to that, the directory `target/classes/` contains also all dependances (jars to added to the classpath of the command line application) and the configuration file `default.properties` (to be added to the classpath of the command line application).
+You will find the created jar in the directory `maven-source/target`. In addition to that, the directory `maven-source/target/classes/` contains also all dependances (jars to be added to the classpath of the command line application) and the configuration file `default.properties` (to be added to the classpath of the command line application).
