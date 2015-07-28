@@ -9,7 +9,7 @@ the computation of combinations is based on the matching of AGROVOC URIs between
 
 ### System Requirements
 
-- java >= 1.6 (Mandatory)
+- java >= 1.6 (mandatory)
 - git >= 1.8.1.4 (to download the project from GitHub: other solutions may be adopted)
 - maven >= 3.0.3 (to edit the code and build a new jar: you can also work with the provided command line application, without using Maven)
 - linux environment (the provided command line application comes with a bash script to execute the code. A developer can replace the bash script with another one, as a bat script for Windows)
