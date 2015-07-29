@@ -16,7 +16,9 @@ the computation of combinations is based on the matching of [AGROVOC URIs](http:
 
 ### Execute the command line application
 
-The folder `executable` contains the command line application, including the bash script `start.sh` to run the recommender system. It contains some folders:
+The folder `executable` contains the command line application, including the bash script `start.sh` to run the recommender system (note: if the bash can't interpret the script, try to run the `dos2unix start.sh` command). 
+
+The command line application is composed of some folders:
 - `bin`: containing the compiled JAVA classes 
 - `lib`: containing the needed JAR files (all dependances can be found in the `maven-source/target/classes/` folder)
 - `resources`: containing the configuration file `defaults.properties` (that can be found in the `maven-source/target/classes/` folder)
