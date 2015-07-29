@@ -5,7 +5,7 @@ between some datasets federated by [SemaGrow](http://www.semagrow.eu/), generati
 This work was funded by the European Commission under EU FP7 project [SemaGrow](http://www.semagrow.eu/) (Grant No. 318497).
 
 The Recommender System computes meaningful combinations between two or more datasets federated by SemaGrow: 
-the computation of combinations is based on the matching of AGROVOC URIs between datasets.
+the computation of combinations is based on the matching of [AGROVOC URIs](http://aims.fao.org/vest-registry/vocabularies/agrovoc-multilingual-agricultural-thesaurus) between datasets.
 
 ### System Requirements
 
