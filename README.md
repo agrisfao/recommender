@@ -16,8 +16,9 @@ the computation of combinations is based on the matching of [AGROVOC URIs](http:
 
 ### Execute the command line application
 
-The folder `executable` contains the command line application, including the bash script `start.sh` to run the recommender system. It contains two folders:
-- `lib`: containing the needed JAR files (the "recommender system" jar and all dependances: dependances can be found in the `maven-source/target/classes/` folder)
+The folder `executable` contains the command line application, including the bash script `start.sh` to run the recommender system. It contains some folders:
+- `bin`: containing the compiled JAVA classes 
+- `lib`: containing the needed JAR files (all dependances can be found in the `maven-source/target/classes/` folder)
 - `resources`: containing the configuration file `defaults.properties` (that can be found in the `maven-source/target/classes/` folder)
 
 The file `defaults.properties` contains input parameters for the recommender system:
@@ -34,12 +35,12 @@ The Recommender System can run also by querying two individual SPARQL endpoints 
 
 ### The Maven project
 
-The folder `maven-source` contains the Maven source project. You can use it to edit the code or to build the "recommender system" jar file, needed by the command line application:
+The folder `maven-source` contains the Maven source project. You can use it to edit the code or to build the "recommender system" distribution zip file (i.e. the command line application):
 
 `cd maven-source/`   
 `mvn clean install`  
 
-You will find the created jar in the directory `maven-source/target`. In addition to that, the directory `maven-source/target/classes/` contains also all dependances (jars to be added to the classpath of the command line application) and the configuration file `default.properties` (to be added to the classpath of the command line application).
+You will find the created zip file in the directory `maven-source/target`. In addition to that, the directory `maven-source/target/classes/` contains also all dependances (jars to be added to the classpath of the command line application) and the configuration file `default.properties` (to be added to the classpath of the command line application).
 
 ### License
 
