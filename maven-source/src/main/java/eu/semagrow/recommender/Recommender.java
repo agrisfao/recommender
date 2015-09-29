@@ -43,15 +43,17 @@ public class Recommender {
 
 	/*
 	 * Start the recommendation process
+	 * Returns the number of recommended URIs
 	 */
-	private void startProcess() {
+	protected int startProcess() {
+		int result = 0;
 
 		//check the output file path
 		try {
 			this.checkAndCreateFileParents(outputFilePath);
 		} catch (Exception e){
 			log.warning("Problems with output file path! The application will be stopped.");
-			return;
+			return 0;
 		}
 
 		//get URIs to be recommended 
@@ -60,7 +62,7 @@ public class Recommender {
 			sourceURIs = this.readSourceFile(Recommender.sourceFilePath);
 		} catch (Exception e){
 			log.warning("Problems accessing the input file! The application will be stopped.");
-			return;
+			return 0;
 		}
 
 		//to display remaining computations
@@ -88,6 +90,7 @@ public class Recommender {
 				log.info("...Remaining: "+ (total-current));
 				if(recoms.size()%1000==0 && recoms.size()>0) {
 					this.writeFile(recoms);
+					result+=recoms.size();
 					recoms.clear();
 				}
 
@@ -100,8 +103,10 @@ public class Recommender {
 		//write last recommendations
 		if(recoms.size()>0) {
 			this.writeFile(recoms);
+			result+=recoms.size();
 			recoms.clear();
 		}
+		return result;
 	}
 
 	/*
